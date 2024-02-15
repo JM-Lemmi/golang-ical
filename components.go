@@ -217,6 +217,13 @@ func (cb *ComponentBase) SetSummary(s string, props ...PropertyParameter) {
 	cb.SetProperty(ComponentPropertySummary, ToText(s), props...)
 }
 
+func (cb *ComponentBase) GetSummary() string {
+	if p := cb.GetProperty(ComponentPropertySummary); p != nil {
+		return FromText(p.Value)
+	}
+	return ""
+}
+
 func (cb *ComponentBase) SetStatus(s ObjectStatus, props ...PropertyParameter) {
 	cb.SetProperty(ComponentPropertyStatus, ToText(string(s)), props...)
 }
@@ -225,8 +232,22 @@ func (cb *ComponentBase) SetDescription(s string, props ...PropertyParameter) {
 	cb.SetProperty(ComponentPropertyDescription, ToText(s), props...)
 }
 
+func (cb *ComponentBase) GetDescription() string {
+	if p := cb.GetProperty(ComponentPropertyDescription); p != nil {
+		return FromText(p.Value)
+	}
+	return ""
+}
+
 func (cb *ComponentBase) SetLocation(s string, props ...PropertyParameter) {
 	cb.SetProperty(ComponentPropertyLocation, ToText(s), props...)
+}
+
+func (cb *ComponentBase) GetLocation() string {
+	if p := cb.GetProperty(ComponentPropertyLocation); p != nil {
+		return FromText(p.Value)
+	}
+	return ""
 }
 
 func (cb *ComponentBase) setGeo(lat interface{}, lng interface{}, props ...PropertyParameter) {
