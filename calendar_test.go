@@ -14,6 +14,15 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func Test20241018(t *testing.T) {
+	calFile, err := os.OpenFile("./testdata/issue-20241018/test.ics", os.O_RDONLY, 0400)
+	if err != nil {
+		t.Errorf("read file: %v", err)
+	}
+	_, err = ParseCalendar(calFile)
+	assert.NoError(t, err)
+}
+
 func TestTimeParsing(t *testing.T) {
 	calFile, err := os.OpenFile("./testdata/timeparsing.ics", os.O_RDONLY, 0400)
 	if err != nil {
