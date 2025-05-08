@@ -120,6 +120,15 @@ func (cb *ComponentBase) SetStartAt(t time.Time, props ...PropertyParameter) {
 	cb.SetProperty(ComponentPropertyDtStart, t.UTC().Format(icalTimestampFormatUtc), props...)
 }
 
+func (cb *ComponentBase) SetStartWithTimezoneAt(t time.Time, tz *time.Location, props ...PropertyParameter) {
+	props = append(props, &KeyValues{
+		Key:   string(ParameterTzid),
+		Value: []string{tz.String()},
+	})
+
+	cb.SetProperty(ComponentPropertyDtStart, t.Format(icalTimestampFormatLocal), props...)
+}
+
 func (cb *ComponentBase) SetAllDayStartAt(t time.Time, props ...PropertyParameter) {
 	props = append(props, WithValue(string(ValueDataTypeDate)))
 	cb.SetProperty(ComponentPropertyDtStart, t.Format(icalDateFormatLocal), props...)
@@ -439,6 +448,14 @@ func (calendar *Calendar) Events() (r []*VEvent) {
 
 func (event *VEvent) SetEndAt(t time.Time, props ...PropertyParameter) {
 	event.SetProperty(ComponentPropertyDtEnd, t.UTC().Format(icalTimestampFormatUtc), props...)
+}
+
+func (event *VEvent) SetEndWithTimezoneAt(t time.Time, tz *time.Location, props ...PropertyParameter) {
+	props = append(props, &KeyValues{
+		Key:   string(ParameterTzid),
+		Value: []string{tz.String()},
+	})
+	event.SetProperty(ComponentPropertyDtEnd, t.Format(icalTimestampFormatLocal), props...)
 }
 
 func (event *VEvent) SetLastModifiedAt(t time.Time, props ...PropertyParameter) {
