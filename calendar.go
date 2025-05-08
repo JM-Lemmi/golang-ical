@@ -484,6 +484,8 @@ func ParseCalendar(r io.Reader) (*Calendar, error) {
 				if co != nil {
 					c.Components = append(c.Components, co)
 				}
+				// support properties after components (e.g. after VTIMEZONE)
+				state = "properties"
 			default:
 				return nil, errors.New("malformed calendar; expected begin or end")
 			}
